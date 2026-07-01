@@ -11,10 +11,22 @@ Checks (no external dependencies — stdlib only):
   - every skill folder name is lowercase kebab-case
   - every SKILL.md has YAML frontmatter with required "name" and
     "description" fields, and frontmatter "name" matches the folder name
+  - every SKILL.md has an "evidence_strength" field set to one of the four
+    allowed tiers, AND a non-empty "evidence_sources" list — every skill
+    must say where its approach comes from and how strong that backing is,
+    not just claim to be evidence-based in prose
   - every file under a skill's references/ is actually mentioned in its
     SKILL.md (catches orphaned reference files)
   - every references/*.md path mentioned in a SKILL.md body actually exists
     on disk (catches broken links, e.g. after a rename)
+
+Note on evidence enforcement: this deliberately goes further than a similar
+check in a reference skill library we looked at, whose validator confirmed
+an `evidence_strength` field existed but never checked it was one of the
+allowed values, and never checked `evidence_sources` was non-empty — two
+skills in that library ended up with off-schema values (e.g. "low-moderate")
+that slipped through because nothing enforced the enum. Presence-only
+checks catch "you forgot the field," not "you filled it in badly."
 
 Run locally:
     python3 scripts/validate_skills.py
@@ -31,6 +43,14 @@ SKILLS_DIR = ROOT / "skills"
 PLUGIN_JSON = ROOT / ".claude-plugin" / "plugin.json"
 KEBAB_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 
+# MEL (Monitoring, Evaluation & Learning) evidence tiers — see docs/EVIDENCE.md
+ALLOWED_EVIDENCE_TIERS = {
+    "established-standard",   # e.g. OECD-DAC criteria, Sphere, UN/DOSM official frameworks
+    "evidence-based",         # peer-reviewed evaluation research showing the approach works
+    "emerging-practice",      # documented sector guidance, not yet strongly validated
+    "original-framework",     # our own design, explicitly labelled as such
+}
+
 errors = []
 
 
@@ -39,6 +59,9 @@ def fail(msg):
 
 
 def parse_frontmatter(text, rel_path):
+    """Minimal YAML-subset parser: scalar 'key: value' lines, plus block
+    sequences ('key:' followed by indented '- item' lines). Enough for this
+    library's frontmatter without taking on a PyYAML dependency."""
     if not text.startswith("---\n"):
         fail(f"{rel_path}: missing YAML frontmatter (file must start with '---')")
         return {}
@@ -48,14 +71,34 @@ def parse_frontmatter(text, rel_path):
         return {}
     block = text[4:end]
     data = {}
-    for line in block.splitlines():
-        if not line.strip():
+    current_list_key = None
+    for raw_line in block.splitlines():
+        if not raw_line.strip():
             continue
-        if ":" not in line:
-            fail(f"{rel_path}: malformed frontmatter line: {line!r}")
+
+        list_item = re.match(r"^\s+-\s+(.*)$", raw_line)
+        if list_item:
+            if current_list_key is None:
+                fail(f"{rel_path}: list item with no preceding key: {raw_line!r}")
+                continue
+            item = list_item.group(1).strip().strip('"').strip("'")
+            data[current_list_key].append(item)
             continue
-        key, _, value = line.partition(":")
-        data[key.strip()] = value.strip()
+
+        if ":" not in raw_line:
+            fail(f"{rel_path}: malformed frontmatter line: {raw_line!r}")
+            continue
+
+        key, _, value = raw_line.partition(":")
+        key = key.strip()
+        value = value.strip()
+        if value == "":
+            # Key introduces a block sequence on following indented lines.
+            current_list_key = key
+            data[key] = []
+        else:
+            current_list_key = None
+            data[key] = value.strip('"').strip("'")
     return data
 
 
@@ -73,6 +116,27 @@ def check_plugin_json():
         fail(f"{PLUGIN_JSON.relative_to(ROOT)}: missing required 'name' field")
     elif not KEBAB_RE.match(name):
         fail(f"{PLUGIN_JSON.relative_to(ROOT)}: name '{name}' is not lowercase kebab-case")
+
+
+def check_evidence(fm, rel_skill_md):
+    tier = fm.get("evidence_strength", "")
+    if not tier:
+        fail(f"{rel_skill_md}: missing required 'evidence_strength' field")
+    elif tier not in ALLOWED_EVIDENCE_TIERS:
+        fail(
+            f"{rel_skill_md}: evidence_strength '{tier}' is not one of "
+            f"{sorted(ALLOWED_EVIDENCE_TIERS)}"
+        )
+
+    sources = fm.get("evidence_sources")
+    if sources is None:
+        fail(f"{rel_skill_md}: missing required 'evidence_sources' list")
+    elif not isinstance(sources, list) or len(sources) == 0:
+        fail(
+            f"{rel_skill_md}: 'evidence_sources' must be a non-empty list — "
+            f"even an original-framework skill must say so explicitly "
+            f"(e.g. 'Original framework — no external evidence base; see docs/EXCLUSIONS.md')"
+        )
 
 
 def check_skills():
@@ -125,6 +189,8 @@ def check_skills():
         elif len(fm["description"]) < 20:
             fail(f"{rel_skill_md}: description is too short to support skill discovery")
 
+        check_evidence(fm, rel_skill_md)
+
         # Every file under references/ should be mentioned in SKILL.md.
         refs_dir = entry / "references"
         if refs_dir.is_dir():
@@ -154,7 +220,7 @@ def main():
             print(f"  - {e}")
         sys.exit(1)
 
-    print(f"OK — {skill_count} skill(s) passed structural validation.")
+    print(f"OK — {skill_count} skill(s) passed structural validation, including evidence sourcing.")
 
 
 if __name__ == "__main__":

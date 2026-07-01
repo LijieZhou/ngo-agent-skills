@@ -3,6 +3,12 @@ name: logframe-toc-builder
 description: Builds a logical framework (logframe) matrix and/or Theory of Change narrative for an NGO or development program from its stated goal and planned activities. Produces impact, outcome, and output levels with indicators, means of verification, and assumptions/risks, plus an optional causal narrative highlighting load-bearing assumptions. Use when a user asks to build a logframe, create a theory of change, design a logical framework, map activities to outcomes and indicators, or needs this for a grant proposal or M&E plan.
 version: 0.1.0
 license: CC-BY-SA-4.0
+evidence_strength: established-standard
+evidence_sources:
+  - "NORAD. The Logical Framework Approach (LFA): Handbook for Objectives-Oriented Planning, 4th ed., 1999 -- the logframe format required by most bilateral and multilateral donors."
+  - "USAID. ADS Chapter 201: Program Cycle Operational Policy -- results frameworks and logframe requirements for USAID-funded programs."
+  - "Vogel, I. (2012). Review of the Use of 'Theory of Change' in International Development. UK Department for International Development (DFID)."
+  - "Mayne, J. (2015). Useful Theory of Change models. Canadian Journal of Program Evaluation, 30(2), 119-142."
 ---
 
 # Logframe / Theory of Change Builder
@@ -45,7 +51,9 @@ Default to both:
 2. A short ToC narrative paragraph beneath it.
 3. A separate short list of load-bearing assumptions pulled out from the table — the ones worth the user double-checking first.
 
-Follow with a "Known limitations" note: this is a draft for review by someone in an M&E role, and every indicator should be checked against real data availability before being finalized in a proposal or report.
+Follow with a "Known limitations" note covering:
+- This is a draft for review by someone in an M&E role, and every indicator should be checked against real data availability before being finalized in a proposal or report.
+- The logframe format simplifies causality into a linear chain, which critics of rigid results-based management argue can obscure complex, non-linear program dynamics (see `docs/EXCLUSIONS.md`). Treat the assumptions/risks column as the place that complexity should surface, and revisit it as the program evolves rather than treating the logframe as fixed once written.
 
 ## Optional chaining with other skills
 

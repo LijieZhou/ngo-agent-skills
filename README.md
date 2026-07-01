@@ -17,14 +17,18 @@ If this library grows to many skills across several domains later, group by doma
 
 ## Current skills
 
-| Domain | Skill | Status |
-|---|---|---|
-| SDG Alignment | [`sdg-alignment-mapper`](skills/sdg-alignment-mapper/SKILL.md) | Tested on Claude, Codex |
-| M&E / Program Design | [`logframe-toc-builder`](skills/logframe-toc-builder/SKILL.md) | Not yet tested |
+| Domain | Skill | Evidence tier | Status |
+|---|---|---|---|
+| SDG Alignment | [`sdg-alignment-mapper`](skills/sdg-alignment-mapper/SKILL.md) | Established standard | Tested on Claude, Codex |
+| M&E / Program Design | [`logframe-toc-builder`](skills/logframe-toc-builder/SKILL.md) | Established standard | Not yet tested |
 
 `sdg-alignment-mapper` is country-agnostic by default (maps to the UN Global Indicator Framework) and supports optional national-context overlays — Malaysia/MySDG is the first one, in `skills/sdg-alignment-mapper/references/malaysia.md`.
 
 `logframe-toc-builder` builds a logframe matrix and/or Theory of Change narrative (impact/outcome/output levels with indicators, means of verification, and load-bearing assumptions) from a program's goal and activities. Its outcome-level indicators are designed to pair naturally with `sdg-alignment-mapper`'s output, though neither skill depends on the other.
+
+## Evidence policy
+
+Every skill must cite where its methodology comes from and how strong that backing is. See [`docs/EVIDENCE.md`](docs/EVIDENCE.md) for the full bibliography and the four evidence tiers (`established-standard`, `evidence-based`, `emerging-practice`, `original-framework`), and [`docs/EXCLUSIONS.md`](docs/EXCLUSIONS.md) for frameworks deliberately left out and why. `scripts/validate_skills.py` enforces that every `SKILL.md` declares an `evidence_strength` from the allowed set and a non-empty `evidence_sources` list — not just that the fields exist, but that they're filled in with a real, allowed value. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the full inclusion criteria.
 
 ## Roadmap
 
@@ -65,6 +69,7 @@ Specifically it checks:
 - `.claude-plugin/plugin.json` exists, is valid JSON, and has a lowercase kebab-case `name`
 - every skill lives at exactly `skills/<skill-name>/SKILL.md` — one level deep, never nested under a domain folder
 - every `SKILL.md` has valid frontmatter with required `name` and `description` fields, and the frontmatter `name` matches its folder name
+- every `SKILL.md` declares an `evidence_strength` from the four allowed tiers and a non-empty `evidence_sources` list — the enum value and list contents are actually checked, not just field presence
 - every file under a skill's `references/` is actually mentioned in its `SKILL.md` (no orphaned reference files)
 - every `references/*.md` path mentioned in a `SKILL.md` body actually exists on disk (no broken links after a rename)
 

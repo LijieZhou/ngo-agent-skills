@@ -3,6 +3,11 @@ name: sdg-alignment-mapper
 description: Maps an NGO or development program's activities, target group, and intended outcomes to relevant UN Sustainable Development Goals (SDGs), targets, and global indicators. Works for any country by default; loads a national-context reference file (e.g., Malaysia/MySDG) when the specified country has one, adding localized indicator status and sub-national detail. Use when a user asks to map a project to the SDGs, show SDG alignment, identify which SDG targets a program contributes to, or needs an SDG crosswalk table for a grant proposal, M&E framework, or donor report.
 version: 0.1.0
 license: CC-BY-SA-4.0
+evidence_strength: established-standard
+evidence_sources:
+  - "UN Statistics Division. Global Indicator Framework for the Sustainable Development Goals and targets of the 2030 Agenda (234 unique indicators post the March 2025 UNSC refinement). https://unstats.un.org/sdgs/"
+  - "Department of Statistics Malaysia (DOSM). Sustainable Development Goals (SDG) Indicators, Malaysia, 2024."
+  - "Economic Planning Unit, Malaysia. SDG Roadmap for Malaysia Phase II: 2021-2025."
 ---
 
 # SDG Alignment Mapper
