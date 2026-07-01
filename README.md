@@ -13,26 +13,31 @@ If this library grows to many skills across several domains later, group by doma
 
 ## Status
 
-**Early / single-skill stage.** We are deliberately starting small: prove one skill works well on Claude first, then confirm it installs cleanly on Codex and Hermes Agent via `npx skills`, before adding more skills. Scope is intentionally limited to these three agents for now — not the full 70+ the vercel CLI supports.
+**Two-skill stage.** We proved `sdg-alignment-mapper` works on Claude and Codex before adding a second skill. Scope is intentionally limited to Claude, Codex, and Hermes Agent for now — not the full 70+ the vercel CLI supports.
 
 ## Current skills
 
 | Domain | Skill | Status |
 |---|---|---|
-| SDG Alignment | [`sdg-alignment-mapper`](skills/sdg-alignment-mapper/SKILL.md) | Testing on Claude |
+| SDG Alignment | [`sdg-alignment-mapper`](skills/sdg-alignment-mapper/SKILL.md) | Tested on Claude, Codex |
+| M&E / Program Design | [`logframe-toc-builder`](skills/logframe-toc-builder/SKILL.md) | Not yet tested |
 
-The mapper is country-agnostic by default (maps to the UN Global Indicator Framework) and supports optional national-context overlays — Malaysia/MySDG is the first one, in `skills/sdg-alignment-mapper/references/malaysia.md`.
+`sdg-alignment-mapper` is country-agnostic by default (maps to the UN Global Indicator Framework) and supports optional national-context overlays — Malaysia/MySDG is the first one, in `skills/sdg-alignment-mapper/references/malaysia.md`.
+
+`logframe-toc-builder` builds a logframe matrix and/or Theory of Change narrative (impact/outcome/output levels with indicators, means of verification, and load-bearing assumptions) from a program's goal and activities. Its outcome-level indicators are designed to pair naturally with `sdg-alignment-mapper`'s output, though neither skill depends on the other.
 
 ## Roadmap
 
 1. ✅ Scaffold repo + first skill (`sdg-alignment-mapper`)
-2. ✅ Confirm `npx skills add` discovers the skill and installs it correctly, scoped to Claude Code, Codex, and Hermes Agent
-3. ✅ Test the skill end-to-end inside Claude (Cowork)
-4. ✅ Test the skill end-to-end inside Codex
-5. 🔲 Test the skill end-to-end inside Hermes Agent
+2. ✅ Confirm `npx skills add` discovers skills and installs them correctly, scoped to Claude Code, Codex, and Hermes Agent
+3. ✅ Test `sdg-alignment-mapper` end-to-end inside Claude (Cowork)
+4. ✅ Test `sdg-alignment-mapper` end-to-end inside Codex
+5. 🔲 Test `sdg-alignment-mapper` end-to-end inside Hermes Agent
 6. ✅ Add structural CI validation (`scripts/validate_skills.py` + GitHub Actions)
 7. 🔲 Publish to GitHub
-8. 🔲 Add more skills once the pattern is validated across all three
+8. ✅ Add second skill (`logframe-toc-builder`)
+9. 🔲 Test `logframe-toc-builder` across Claude, Codex, Hermes Agent
+10. 🔲 Set up behavioral eval tooling (via `skill-creator`) now that there are two skills to justify it
 
 ## Install
 
