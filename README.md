@@ -1,91 +1,155 @@
 # NGO Agent Skills
 
-An open, agent-agnostic library of skills for NGO program design, monitoring & evaluation (M&E), and SDG/donor reporting.
+[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-1.0-blue)](https://agentskills.io) [![Skills](https://img.shields.io/badge/skills-2-blue)](https://github.com/LijieZhou/ngo-agent-skills) [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/) [![Last Commit](https://img.shields.io/github/last-commit/LijieZhou/ngo-agent-skills)](https://github.com/LijieZhou/ngo-agent-skills/commits/main)
 
-Each skill is a self-contained folder under `skills/` containing a `SKILL.md` (instructions + YAML frontmatter) and, where needed, a `references/` folder with supporting detail. This is the [Agent Skills](https://agentskills.io) format — no dependencies, no build step.
+An open-source library of evidence-based skills for NGO program design, monitoring & evaluation (M&E), and SDG/donor reporting — works in Claude (Cowork, Claude Code) and OpenAI Codex, and follows the open [Agent Skills](https://agentskills.io) standard so it can run anywhere that supports it.
 
-Distribution uses two paths that don't conflict:
+---
 
-- **Claude (Cowork / Claude Code):** a `.claude-plugin/plugin.json` manifest is included so the library installs directly as a native Claude plugin. Cowork's plugin loader auto-discovers skills at exactly `skills/<skill-name>/SKILL.md` — one level deep, no domain subfolder — so this repo keeps that flat layout at the root.
-- **Claude, Codex, Hermes Agent (and any other Agent Skills-compatible tool):** the [`vercel-labs/skills`](https://github.com/vercel-labs/skills) CLI (`npx skills`) reads the same flat layout with no changes needed, and copies/symlinks each skill into the right directory per agent. This is the primary cross-agent install path — we don't hand-build per-agent adapter files.
+## Get Started
 
-If this library grows to many skills across several domains later, group by domain using metadata inside each `SKILL.md` (or an explicit `skills` path list in `plugin.json`) rather than nested folders — nested folders break Cowork's auto-discovery even though the vercel CLI tolerates them.
+Works with Claude and Codex, and any tool that supports the Agent Skills standard.
 
-## Status
+### Claude
 
-**Two-skill stage.** We proved `sdg-alignment-mapper` works on Claude and Codex before adding a second skill. Scope is intentionally limited to Claude, Codex, and Hermes Agent for now — not the full 70+ the vercel CLI supports.
+**Cowork (easiest)** — go to **Customize → (+) Add Plugin** and paste:
 
-## Current skills
-
-| Domain | Skill | Evidence tier | Status |
-|---|---|---|---|
-| SDG Alignment | [`sdg-alignment-mapper`](skills/sdg-alignment-mapper/SKILL.md) | Established standard | Tested on Claude, Codex |
-| M&E / Program Design | [`logframe-toc-builder`](skills/logframe-toc-builder/SKILL.md) | Established standard | Not yet tested |
-
-`sdg-alignment-mapper` is country-agnostic by default (maps to the UN Global Indicator Framework) and supports optional national-context overlays — Malaysia/MySDG is the first one, in `skills/sdg-alignment-mapper/references/malaysia.md`.
-
-`logframe-toc-builder` builds a logframe matrix and/or Theory of Change narrative (impact/outcome/output levels with indicators, means of verification, and load-bearing assumptions) from a program's goal and activities. Its outcome-level indicators are designed to pair naturally with `sdg-alignment-mapper`'s output, though neither skill depends on the other.
-
-## Evidence policy
-
-Every skill must cite where its methodology comes from and how strong that backing is. See [`docs/EVIDENCE.md`](docs/EVIDENCE.md) for the full bibliography and the four evidence tiers (`established-standard`, `evidence-based`, `emerging-practice`, `original-framework`), and [`docs/EXCLUSIONS.md`](docs/EXCLUSIONS.md) for frameworks deliberately left out and why. `scripts/validate_skills.py` enforces that every `SKILL.md` declares an `evidence_strength` from the allowed set and a non-empty `evidence_sources` list — not just that the fields exist, but that they're filled in with a real, allowed value. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the full inclusion criteria.
-
-## Roadmap
-
-1. ✅ Scaffold repo + first skill (`sdg-alignment-mapper`)
-2. ✅ Confirm `npx skills add` discovers skills and installs them correctly, scoped to Claude Code, Codex, and Hermes Agent
-3. ✅ Test `sdg-alignment-mapper` end-to-end inside Claude (Cowork)
-4. ✅ Test `sdg-alignment-mapper` end-to-end inside Codex
-5. 🔲 Test `sdg-alignment-mapper` end-to-end inside Hermes Agent
-6. ✅ Add structural CI validation (`scripts/validate_skills.py` + GitHub Actions)
-7. 🔲 Publish to GitHub
-8. ✅ Add second skill (`logframe-toc-builder`)
-9. 🔲 Test `logframe-toc-builder` across Claude, Codex, Hermes Agent
-10. 🔲 Set up behavioral eval tooling (via `skill-creator`) now that there are two skills to justify it
-
-## Install
-
-**Claude — Cowork:** Customize → (+) Add Plugin → paste this repo's URL once it's pushed to GitHub.
-
-**Claude — Claude Code CLI:**
 ```
-claude plugin install <repo-url>
+https://github.com/LijieZhou/ngo-agent-skills
 ```
 
-**Claude, Codex, or Hermes Agent — via `npx skills`:**
+**Claude Code CLI** — install from the repo URL:
+
 ```
-npx skills add <repo-url> --skill sdg-alignment-mapper -a claude-code -a codex -a hermes-agent
+claude plugin install https://github.com/LijieZhou/ngo-agent-skills
 ```
-Add `-g` to install globally instead of per-project, or drop `--skill` / `-a` flags to be prompted interactively.
 
-**Manual (any agent):** copy `skills/<skill-name>/` into your agent's skills directory.
+### OpenAI Codex
 
-## Testing
-
-`scripts/validate_skills.py` is a dependency-free structural check that runs on every push/PR via `.github/workflows/validate.yml`. It catches format regressions before they reach an install — including the nested-folder bug that once broke Cowork's plugin discovery.
-
-Specifically it checks:
-
-- `.claude-plugin/plugin.json` exists, is valid JSON, and has a lowercase kebab-case `name`
-- every skill lives at exactly `skills/<skill-name>/SKILL.md` — one level deep, never nested under a domain folder
-- every `SKILL.md` has valid frontmatter with required `name` and `description` fields, and the frontmatter `name` matches its folder name
-- every `SKILL.md` declares an `evidence_strength` from the four allowed tiers and a non-empty `evidence_sources` list — the enum value and list contents are actually checked, not just field presence
-- every file under a skill's `references/` is actually mentioned in its `SKILL.md` (no orphaned reference files)
-- every `references/*.md` path mentioned in a `SKILL.md` body actually exists on disk (no broken links after a rename)
-
-The CI workflow also runs `npx skills add . --list` as a smoke test, confirming the vercel CLI can actually discover every skill — not just that the static checks pass.
-
-Run it locally before committing:
 ```
+npx skills add LijieZhou/ngo-agent-skills -a codex
+```
+
+Installs into `.agents/skills/`. Restart Codex after installing.
+
+### Any Agent Skills-compatible tool
+
+Copy the skill folder you need from `skills/` into your agent's skills directory. Each skill is a folder containing `SKILL.md` with name/description frontmatter — no dependencies, no build step.
+
+### Manual (no setup)
+
+1. Open a skill file in the repository (under `skills/`)
+2. Copy the prompt block
+3. Paste it into any AI and fill in the fields for your program or context
+
+---
+
+## Feedback & Contributions
+
+Found a gap, a stale citation, or want to add a skill? Open a Pull Request or Issue on GitHub — see [`CONTRIBUTING.md`](CONTRIBUTING.md) for the inclusion bar.
+
+---
+
+**I work at an NGO — start here.** No setup required. Use the plugin, a local skill install, or manual copy-paste and start using it for your program.
+
+**I'm a developer or AI builder — start here.** YAML schemas, evidence-sourcing fields, and validation scripts live under `scripts/`.
+
+---
+
+## Who This Is For
+
+- **Program officers and project managers** who need an SDG alignment table or a logframe/Theory of Change draft without days of manual research
+- **M&E (monitoring, evaluation & learning) staff** building donor reporting frameworks or indicator crosswalks
+- **Grant writers** translating program activities into the format a funder requires
+- **Training and capacity-building teams** running AI-assisted NGO programs
+- **Developers and AI builders** who need a structured, evidence-sourced NGO/development knowledge layer
+
+---
+
+## Why This Exists
+
+AI is arriving in the NGO and development sector fast. Whether it improves program design or just scales confident-sounding, unsourced advice depends on what it's built on.
+
+Most AI tools aimed at NGOs are built on plausible output, not on named evidence or the institutional standards the sector already runs on. This library exists to build something different: skills grounded in frameworks practitioners already trust — the UN SDG Global Indicator Framework, national statistics offices' own indicator data, the logframe format donors require, and the research literature on Theory of Change — and honest about what's still a draft for a person to check, not a finished answer.
+
+---
+
+## Try It Now
+
+**Example:** *"Map this program to the SDGs — we teach basic literacy to out-of-school children in rural Sabah, Malaysia."*
+
+Claude runs the `sdg-alignment-mapper` skill and returns a table of SDG goals, targets, and global indicators the program plausibly contributes to, flags any weak links honestly instead of hiding them, and — because a country was named — adds Malaysia/MySDG-specific indicator status wherever a national reference exists.
+
+**Without the plugin (manual):** open `skills/sdg-alignment-mapper/SKILL.md`, copy the prompt block, and paste it into any AI along with your program description.
+
+---
+
+## What Makes This Different
+
+**Evidence is the filter.** Every skill cites named sourcing — an institutional standard, peer-reviewed research, or documented sector practice. See [`docs/EXCLUSIONS.md`](docs/EXCLUSIONS.md) for frameworks deliberately left out and why.
+
+**Evidence strength is rated transparently.**
+
+| Tier | What it means |
+|---|---|
+| **Established standard** | A recognized institutional standard the sector already defers to — OECD-DAC criteria, Sphere Standards, UN/DOSM official frameworks, donor-mandated formats like the logframe |
+| **Evidence-based** | Peer-reviewed evaluation research showing the approach works |
+| **Emerging practice** | Documented sector guidance, used by practitioners, not yet strongly validated |
+| **Original framework** | Our own design choice, explicitly labelled as such rather than dressed up as more authoritative than it is |
+
+See [`docs/EVIDENCE.md`](docs/EVIDENCE.md) for the full bibliography behind every skill.
+
+**Every skill says what it doesn't know.** No skill fabricates a data source, indicator, or citation — if information isn't available (e.g., no national indicator layer exists yet for a given country), it says so plainly instead of inventing something plausible-sounding.
+
+**Built for evidence tracking, not just prompts.** Every `SKILL.md` carries a machine-readable header with evidence sourcing, topic tags, and a last-reviewed date — this is a skill library engineered for accountability, not a prompt collection with metadata bolted on.
+
+---
+
+## Current Skills
+
+| Skill | Topic | Evidence tier |
+|---|---|---|
+| [`sdg-alignment-mapper`](skills/sdg-alignment-mapper/SKILL.md) | SDG Alignment | Established standard |
+| [`logframe-toc-builder`](skills/logframe-toc-builder/SKILL.md) | M&E / Program Design | Established standard |
+
+`sdg-alignment-mapper` is country-agnostic by default (maps to the UN Global Indicator Framework) and adds optional national-context overlays — Malaysia/MySDG is the first one, in `skills/sdg-alignment-mapper/references/malaysia.md`.
+
+`logframe-toc-builder` builds a logframe matrix and/or Theory of Change narrative — impact/outcome/output levels with indicators, means of verification, and load-bearing assumptions — from a program's goal and activities. Its outcome-level indicators pair naturally with `sdg-alignment-mapper`'s output, though neither skill depends on the other.
+
+A companion browsable site (Topics / Official / Audits / Docs) is at [`ngo-agent-skills-site`](https://github.com/LijieZhou/ngo-agent-skills-site).
+
+---
+
+## Architecture
+
+### For developers: the YAML schema
+
+Every skill opens with a machine-readable YAML header: `name`, `description`, `version`, `license`, `evidence_strength`, `evidence_sources`, `topics`, `official`, and `last_reviewed`. See any file under `skills/` for the full format.
+
+---
+
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for inclusion criteria. The bar is intentionally high: every skill must be grounded in named evidence, honestly rated, and practically useful.
+
+### Workflow for adding or revising a skill
+
+After creating or editing a `SKILL.md`, run these before committing:
+
+```bash
 python3 scripts/validate_skills.py
+python3 scripts/generate_registry.py
+npx -y skills@latest add . --list
 ```
 
-This covers structural/format correctness only — it does not check whether a skill's output is actually good (e.g., whether an SDG mapping is accurate). That would require a behavioral eval harness, which is a possible future addition once there are more skills to justify the setup cost.
+Commit `registry.json` if it changed — CI fails the build if it's out of date.
 
-## Adding a new national context
+---
 
-To extend `sdg-alignment-mapper` to another country, add `skills/sdg-alignment-mapper/references/<country>.md` following the same structure as the Malaysia file (indicator availability categories, national vs. global target differences, any sub-national reporting layer), then list it in the skill's SKILL.md.
+## Credit
 
-## License
+Built by Lijie, part of Project Aspirasai 2026 (Malaysia, MySDG).
 
-CC BY-SA 4.0 — open, forkable, share-alike.
+## Licence
+
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Open. Forkable. Share alike.
