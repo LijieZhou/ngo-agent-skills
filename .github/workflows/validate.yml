@@ -1,0 +1,25 @@
+name: Validate Skills
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Structural validation (plugin.json, frontmatter, folder depth, references)
+        run: python3 scripts/validate_skills.py
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Smoke test skill discovery via npx skills
+        run: npx -y skills@latest add . --list
