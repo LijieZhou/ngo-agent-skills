@@ -50,16 +50,18 @@ Found a gap, a stale citation, or want to add a skill? Open a Pull Request or Is
 
 ---
 
-**I work at an NGO — start here.** No setup required. Use the plugin, a local skill install, or manual copy-paste and start using it for your program.
+**I work at an NGO — [start here](#try-it-now).** No setup required. Use the plugin, a local skill install, or manual copy-paste and start using it for your program.
 
-**I'm a developer or AI builder — start here.** YAML schemas, evidence-sourcing fields, and validation scripts live under `scripts/`.
+**I'm a developer or AI builder — [start here](#architecture).** YAML schemas, evidence-sourcing fields, and validation scripts live under `scripts/`.
 
 ---
 
 ## Who This Is For
 
-- **Program officers and project managers** who need an SDG alignment table or a logframe/Theory of Change draft without days of manual research
-- **M&E (monitoring, evaluation & learning) staff** building donor reporting frameworks or indicator crosswalks
+This library is designed to grow — today it covers SDG alignment and logframe/Theory of Change design, but the aim is to keep expanding into whatever else program officers and project managers need most.
+
+- **Program officers and project managers** who want evidence-grounded support across the program lifecycle — design, SDG alignment, M&E, donor reporting — without hours of manual research
+- **M&E (monitoring, evaluation & learning) staff** building reporting frameworks or indicator crosswalks
 - **Grant writers** translating program activities into the format a funder requires
 - **Training and capacity-building teams** running AI-assisted NGO programs
 - **Developers and AI builders** who need a structured, evidence-sourced NGO/development knowledge layer
@@ -148,7 +150,7 @@ Commit `registry.json` if it changed — CI fails the build if it's out of date.
 
 ## Credit
 
-Built by Lijie, part of Project Aspirasai 2026 (Malaysia, MySDG).
+Built by [Lijie Zhou](https://www.zhoueesleyfoundation.com/), co-founder of the [Zhou & Eesley Family Foundation](https://www.zhoueesleyfoundation.com/), part of Project Aspirasai 2026 (Malaysia, MySDG).
 
 ## Licence
 
