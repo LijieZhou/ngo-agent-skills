@@ -1,0 +1,42 @@
+{
+  "skill_count": 2,
+  "skills": [
+    {
+      "name": "logframe-toc-builder",
+      "description": "Builds a logical framework (logframe) matrix and/or Theory of Change narrative for an NGO or development program from its stated goal and planned activities. Produces impact, outcome, and output levels with indicators, means of verification, and assumptions/risks, plus an optional causal narrative highlighting load-bearing assumptions. Use when a user asks to build a logframe, create a theory of change, design a logical framework, map activities to outcomes and indicators, or needs this for a grant proposal or M&E plan.",
+      "version": "0.1.0",
+      "license": "CC-BY-SA-4.0",
+      "evidence_strength": "established-standard",
+      "evidence_sources": [
+        "NORAD. The Logical Framework Approach (LFA): Handbook for Objectives-Oriented Planning, 4th ed., 1999 -- the logframe format required by most bilateral and multilateral donors.",
+        "USAID. ADS Chapter 201: Program Cycle Operational Policy -- results frameworks and logframe requirements for USAID-funded programs.",
+        "Vogel, I. (2012). Review of the Use of 'Theory of Change' in International Development. UK Department for International Development (DFID).",
+        "Mayne, J. (2015). Useful Theory of Change models. Canadian Journal of Program Evaluation, 30(2), 119-142."
+      ],
+      "topics": [
+        "me-program-design"
+      ],
+      "official": true,
+      "last_reviewed": "2026-07-01",
+      "path": "skills/logframe-toc-builder/SKILL.md"
+    },
+    {
+      "name": "sdg-alignment-mapper",
+      "description": "Maps an NGO or development program's activities, target group, and intended outcomes to relevant UN Sustainable Development Goals (SDGs), targets, and global indicators. Works for any country by default; loads a national-context reference file (e.g., Malaysia/MySDG) when the specified country has one, adding localized indicator status and sub-national detail. Use when a user asks to map a project to the SDGs, show SDG alignment, identify which SDG targets a program contributes to, or needs an SDG crosswalk table for a grant proposal, M&E framework, or donor report.",
+      "version": "0.1.0",
+      "license": "CC-BY-SA-4.0",
+      "evidence_strength": "established-standard",
+      "evidence_sources": [
+        "UN Statistics Division. Global Indicator Framework for the Sustainable Development Goals and targets of the 2030 Agenda (234 unique indicators post the March 2025 UNSC refinement). https://unstats.un.org/sdgs/",
+        "Department of Statistics Malaysia (DOSM). Sustainable Development Goals (SDG) Indicators, Malaysia, 2024.",
+        "Economic Planning Unit, Malaysia. SDG Roadmap for Malaysia Phase II: 2021-2025."
+      ],
+      "topics": [
+        "sdg-alignment"
+      ],
+      "official": true,
+      "last_reviewed": "2026-07-01",
+      "path": "skills/sdg-alignment-mapper/SKILL.md"
+    }
+  ]
+}

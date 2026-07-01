@@ -17,6 +17,15 @@ jobs:
       - name: Structural validation (plugin.json, frontmatter, folder depth, references)
         run: python3 scripts/validate_skills.py
 
+      - name: registry.json is up to date
+        run: |
+          python3 scripts/generate_registry.py
+          git diff --exit-code registry.json || (
+            echo ""
+            echo "registry.json is out of date. Run 'python3 scripts/generate_registry.py' and commit the result."
+            exit 1
+          )
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"

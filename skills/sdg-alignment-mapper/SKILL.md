@@ -8,6 +8,10 @@ evidence_sources:
   - "UN Statistics Division. Global Indicator Framework for the Sustainable Development Goals and targets of the 2030 Agenda (234 unique indicators post the March 2025 UNSC refinement). https://unstats.un.org/sdgs/"
   - "Department of Statistics Malaysia (DOSM). Sustainable Development Goals (SDG) Indicators, Malaysia, 2024."
   - "Economic Planning Unit, Malaysia. SDG Roadmap for Malaysia Phase II: 2021-2025."
+topics:
+  - sdg-alignment
+official: true
+last_reviewed: 2026-07-01
 ---
 
 # SDG Alignment Mapper

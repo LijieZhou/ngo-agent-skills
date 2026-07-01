@@ -34,6 +34,9 @@ Every `SKILL.md` must include, in its YAML frontmatter:
 - `version`, `license`
 - `evidence_strength` — one of the four tiers in `docs/EVIDENCE.md`
 - `evidence_sources` — a non-empty list, even for `original-framework` skills (state explicitly that there's no external evidence base)
+- `topics` — a non-empty list of kebab-case topic slugs, powers the companion website's Topics page
+- `official` — `true`/`false`; `true` for anything maintained by this project's core team
+- `last_reviewed` — `YYYY-MM-DD`, the last time the evidence sourcing was checked against current reality; powers the website's Audit page
 
 ## Validation before a pull request
 
@@ -41,10 +44,11 @@ Run:
 
 ```bash
 python3 scripts/validate_skills.py
+python3 scripts/generate_registry.py
 npx -y skills@latest add . --list
 ```
 
-The first checks plugin/skill structure, frontmatter completeness, and evidence sourcing. The second confirms the vercel `skills` CLI can actually discover every skill — not just that the static checks pass. Both also run automatically in CI on every push/PR.
+The first checks plugin/skill structure, frontmatter completeness, evidence sourcing, and the website fields above. The second regenerates `registry.json` — commit it if it changed; CI fails the build if it's out of date. The third confirms the vercel `skills` CLI can actually discover every skill — not just that the static checks pass. All three also run automatically in CI on every push/PR.
 
 ## Pull request guidance
 

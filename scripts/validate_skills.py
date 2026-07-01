@@ -15,6 +15,10 @@ Checks (no external dependencies — stdlib only):
     allowed tiers, AND a non-empty "evidence_sources" list — every skill
     must say where its approach comes from and how strong that backing is,
     not just claim to be evidence-based in prose
+  - every SKILL.md has a non-empty "topics" list (kebab-case entries), an
+    "official" boolean, and a "last_reviewed" date in YYYY-MM-DD format —
+    these three power the website's Topics/Official/Audit pages, generated
+    from scripts/generate_registry.py
   - every file under a skill's references/ is actually mentioned in its
     SKILL.md (catches orphaned reference files)
   - every references/*.md path mentioned in a SKILL.md body actually exists
@@ -38,10 +42,14 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _frontmatter import parse_frontmatter, as_bool  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 SKILLS_DIR = ROOT / "skills"
 PLUGIN_JSON = ROOT / ".claude-plugin" / "plugin.json"
 KEBAB_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 # MEL (Monitoring, Evaluation & Learning) evidence tiers — see docs/EVIDENCE.md
 ALLOWED_EVIDENCE_TIERS = {
@@ -56,50 +64,6 @@ errors = []
 
 def fail(msg):
     errors.append(msg)
-
-
-def parse_frontmatter(text, rel_path):
-    """Minimal YAML-subset parser: scalar 'key: value' lines, plus block
-    sequences ('key:' followed by indented '- item' lines). Enough for this
-    library's frontmatter without taking on a PyYAML dependency."""
-    if not text.startswith("---\n"):
-        fail(f"{rel_path}: missing YAML frontmatter (file must start with '---')")
-        return {}
-    end = text.find("\n---", 4)
-    if end == -1:
-        fail(f"{rel_path}: frontmatter opened with '---' but never closed")
-        return {}
-    block = text[4:end]
-    data = {}
-    current_list_key = None
-    for raw_line in block.splitlines():
-        if not raw_line.strip():
-            continue
-
-        list_item = re.match(r"^\s+-\s+(.*)$", raw_line)
-        if list_item:
-            if current_list_key is None:
-                fail(f"{rel_path}: list item with no preceding key: {raw_line!r}")
-                continue
-            item = list_item.group(1).strip().strip('"').strip("'")
-            data[current_list_key].append(item)
-            continue
-
-        if ":" not in raw_line:
-            fail(f"{rel_path}: malformed frontmatter line: {raw_line!r}")
-            continue
-
-        key, _, value = raw_line.partition(":")
-        key = key.strip()
-        value = value.strip()
-        if value == "":
-            # Key introduces a block sequence on following indented lines.
-            current_list_key = key
-            data[key] = []
-        else:
-            current_list_key = None
-            data[key] = value.strip('"').strip("'")
-    return data
 
 
 def check_plugin_json():
@@ -139,6 +103,30 @@ def check_evidence(fm, rel_skill_md):
         )
 
 
+def check_site_fields(fm, rel_skill_md):
+    """topics / official / last_reviewed — required for the website (Topics,
+    Official, and Audit pages) built from scripts/generate_registry.py."""
+    topics = fm.get("topics")
+    if topics is None or not isinstance(topics, list) or len(topics) == 0:
+        fail(f"{rel_skill_md}: missing required non-empty 'topics' list")
+    else:
+        for topic in topics:
+            if not KEBAB_RE.match(topic):
+                fail(f"{rel_skill_md}: topic '{topic}' is not lowercase kebab-case")
+
+    official = fm.get("official")
+    if official is None:
+        fail(f"{rel_skill_md}: missing required 'official' field")
+    elif as_bool(official) is None:
+        fail(f"{rel_skill_md}: 'official' must be true or false, got {official!r}")
+
+    last_reviewed = fm.get("last_reviewed", "")
+    if not last_reviewed:
+        fail(f"{rel_skill_md}: missing required 'last_reviewed' date (YYYY-MM-DD)")
+    elif not DATE_RE.match(last_reviewed):
+        fail(f"{rel_skill_md}: 'last_reviewed' must be YYYY-MM-DD, got {last_reviewed!r}")
+
+
 def check_skills():
     if not SKILLS_DIR.is_dir():
         fail("Missing skills/ directory")
@@ -174,7 +162,7 @@ def check_skills():
             continue
 
         body = skill_md.read_text()
-        fm = parse_frontmatter(body, rel_skill_md)
+        fm = parse_frontmatter(body, on_error=lambda msg: fail(f"{rel_skill_md}: {msg}"))
 
         if "name" not in fm:
             fail(f"{rel_skill_md}: frontmatter missing required 'name' field")
@@ -190,6 +178,7 @@ def check_skills():
             fail(f"{rel_skill_md}: description is too short to support skill discovery")
 
         check_evidence(fm, rel_skill_md)
+        check_site_fields(fm, rel_skill_md)
 
         # Every file under references/ should be mentioned in SKILL.md.
         refs_dir = entry / "references"

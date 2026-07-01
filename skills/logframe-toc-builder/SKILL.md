@@ -9,6 +9,10 @@ evidence_sources:
   - "USAID. ADS Chapter 201: Program Cycle Operational Policy -- results frameworks and logframe requirements for USAID-funded programs."
   - "Vogel, I. (2012). Review of the Use of 'Theory of Change' in International Development. UK Department for International Development (DFID)."
   - "Mayne, J. (2015). Useful Theory of Change models. Canadian Journal of Program Evaluation, 30(2), 119-142."
+topics:
+  - me-program-design
+official: true
+last_reviewed: 2026-07-01
 ---
 
 # Logframe / Theory of Change Builder
