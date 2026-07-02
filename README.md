@@ -18,10 +18,11 @@ Works with Claude and Codex, and any tool that supports the Agent Skills standar
 https://github.com/LijieZhou/ngo-agent-skills
 ```
 
-**Claude Code CLI** — install from the repo URL:
+**Claude Code CLI** — add this repo as a marketplace, then install the plugin from it:
 
 ```
-claude plugin install https://github.com/LijieZhou/ngo-agent-skills
+claude plugin marketplace add https://github.com/LijieZhou/ngo-agent-skills.git
+claude plugin install ngo-agent-skills@LijieZhou-ngo-agent-skills
 ```
 
 ### OpenAI Codex

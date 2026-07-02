@@ -1,0 +1,14 @@
+{
+  "name": "ngo-agent-skills",
+  "owner": {
+    "name": "LijieZhou"
+  },
+  "plugins": [
+    {
+      "name": "ngo-agent-skills",
+      "source": ".",
+      "version": "0.1.0",
+      "description": "Agent-agnostic skill library for NGO program design, monitoring & evaluation, SDG reporting, and earned-income/funding-strategy screening."
+    }
+  ]
+}
