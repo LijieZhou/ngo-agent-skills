@@ -1,6 +1,6 @@
 # NGO Agent Skills
 
-[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-1.0-blue)](https://agentskills.io) [![Skills](https://img.shields.io/badge/skills-2-blue)](https://github.com/LijieZhou/ngo-agent-skills) [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/) [![Last Commit](https://img.shields.io/github/last-commit/LijieZhou/ngo-agent-skills)](https://github.com/LijieZhou/ngo-agent-skills/commits/main)
+[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-1.0-blue)](https://agentskills.io) [![Skills](https://img.shields.io/badge/skills-4-blue)](https://github.com/LijieZhou/ngo-agent-skills) [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/) [![Last Commit](https://img.shields.io/github/last-commit/LijieZhou/ngo-agent-skills)](https://github.com/LijieZhou/ngo-agent-skills/commits/main)
 
 An open-source library of evidence-based skills for NGO program design, monitoring & evaluation (M&E), and SDG/donor reporting — works in Claude (Cowork, Claude Code) and OpenAI Codex, and follows the open [Agent Skills](https://agentskills.io) standard so it can run anywhere that supports it.
 
@@ -58,7 +58,7 @@ Found a gap, a stale citation, or want to add a skill? Open a Pull Request or Is
 
 ## Who This Is For
 
-This library is designed to grow — today it covers SDG alignment and logframe/Theory of Change design, but the aim is to keep expanding into whatever else program officers and project managers need most.
+This library is designed to grow — today it covers SDG alignment, logframe/Theory of Change design, and earned-income/funding-strategy screening, but the aim is to keep expanding into whatever else program officers and project managers need most.
 
 - **Program officers and project managers** who want evidence-grounded support across the program lifecycle — design, SDG alignment, M&E, donor reporting — without hours of manual research
 - **M&E (monitoring, evaluation & learning) staff** building reporting frameworks or indicator crosswalks
@@ -113,10 +113,16 @@ See [`docs/EVIDENCE.md`](docs/EVIDENCE.md) for the full bibliography behind ever
 |---|---|---|
 | [`sdg-alignment-mapper`](skills/sdg-alignment-mapper/SKILL.md) | SDG Alignment | Established standard |
 | [`logframe-toc-builder`](skills/logframe-toc-builder/SKILL.md) | M&E / Program Design | Established standard |
+| [`earned-income-model-screener`](skills/earned-income-model-screener/SKILL.md) | Earned Income & Social Enterprise | Established standard |
+| [`funding-mix-diversification-planner`](skills/funding-mix-diversification-planner/SKILL.md) | Funding Strategy | Established standard |
 
 `sdg-alignment-mapper` is country-agnostic by default (maps to the UN Global Indicator Framework) and adds optional national-context overlays — Malaysia/MySDG is the first one, in `skills/sdg-alignment-mapper/references/malaysia.md`.
 
 `logframe-toc-builder` builds a logframe matrix and/or Theory of Change narrative — impact/outcome/output levels with indicators, means of verification, and load-bearing assumptions — from a program's goal and activities. Its outcome-level indicators pair naturally with `sdg-alignment-mapper`'s output, though neither skill depends on the other.
+
+`earned-income-model-screener` classifies and scores earned-income/social-enterprise ideas using Kim Alter's Social Enterprise Typology and the Matrix Map (mission impact vs. financial profitability), producing a Star/Heart/Money Tree/Stop Sign recommendation per idea.
+
+`funding-mix-diversification-planner` assesses an organization's current funding concentration and recommends diversification moves using Bridgespan's "Ten Nonprofit Funding Models." It pairs naturally with `earned-income-model-screener` — screened ideas map onto candidate funding archetypes — though neither skill depends on the other.
 
 A companion browsable site (Topics / Official / Audits / Docs) is at [`ngo-agent-skills-site`](https://github.com/LijieZhou/ngo-agent-skills-site).
 

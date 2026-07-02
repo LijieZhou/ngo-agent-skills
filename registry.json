@@ -1,6 +1,41 @@
 {
-  "skill_count": 2,
+  "skill_count": 4,
   "skills": [
+    {
+      "name": "earned-income-model-screener",
+      "description": "Screens and classifies earned-income and social-enterprise ideas for an NGO, cooperative, or social enterprise using Kim Alter's Social Enterprise Typology and the Matrix Map (mission impact vs. financial profitability). Produces a per-idea classification (Embedded/Integrated/External/Complex), a Matrix Map placement (Star/Heart/Money Tree/Stop Sign), and a viability recommendation. Use when a user asks to evaluate an earned-income idea, screen a social-enterprise concept, decide whether a revenue idea fits the mission, prioritize between multiple potential income-generating activities, or needs this for a business plan, grant proposal, or board discussion.",
+      "version": "0.1.0",
+      "license": "CC-BY-SA-4.0",
+      "evidence_strength": "established-standard",
+      "evidence_sources": [
+        "Alter, K. (2007). Social Enterprise Typology (updated Nov 27, 2007). Virtue Ventures LLC. https://www.4lenses.org/setypology",
+        "Bell, J., Masaoka, J., & Zimmerman, S. (2010). Nonprofit Sustainability: Making Strategic Decisions for Financial Viability. Jossey-Bass. (Matrix Map framework)",
+        "Zimmerman, S., & Bell, J. (2014). The Sustainability Mindset: Using the Matrix Map to Make Strategic Decisions. Jossey-Bass."
+      ],
+      "topics": [
+        "earned-income"
+      ],
+      "official": true,
+      "last_reviewed": "2026-07-02",
+      "path": "skills/earned-income-model-screener/SKILL.md"
+    },
+    {
+      "name": "funding-mix-diversification-planner",
+      "description": "Analyzes an NGO's current funding mix and recommends how to diversify it \u2014 including toward earned income \u2014 using the \"Ten Nonprofit Funding Models\" framework (Foster, Kim & Christiansen, Bridgespan/Stanford Social Innovation Review, 2009). Classifies the organization's closest-fit funding model archetype(s) by funding source, decision-maker type, and motivation, flags single-source dependency risk, and suggests realistic next funding sources to pursue. Use when a user asks to diversify funding, reduce grant or donor dependency, plan a funding strategy, assess funding concentration risk, or build a funding-mix section for a business plan, sustainability plan, or board strategy discussion.",
+      "version": "0.1.0",
+      "license": "CC-BY-SA-4.0",
+      "evidence_strength": "established-standard",
+      "evidence_sources": [
+        "Foster, W., Kim, P., & Christiansen, B. (2009). Ten Nonprofit Funding Models. Stanford Social Innovation Review, Spring 2009. (Research: Bridgespan Group analysis of 144 nonprofits reaching $50M+ annual revenue since 1970.)",
+        "Bridgespan Group (2011). Finding Your Funding Model: A Practical Approach."
+      ],
+      "topics": [
+        "funding-strategy"
+      ],
+      "official": true,
+      "last_reviewed": "2026-07-02",
+      "path": "skills/funding-mix-diversification-planner/SKILL.md"
+    },
     {
       "name": "logframe-toc-builder",
       "description": "Builds a logical framework (logframe) matrix and/or Theory of Change narrative for an NGO or development program from its stated goal and planned activities. Produces impact, outcome, and output levels with indicators, means of verification, and assumptions/risks, plus an optional causal narrative highlighting load-bearing assumptions. Use when a user asks to build a logframe, create a theory of change, design a logical framework, map activities to outcomes and indicators, or needs this for a grant proposal or M&E plan.",

@@ -30,6 +30,21 @@ Every skill's `evidence_strength` frontmatter field must be one of:
 - Vogel, I. (2012). *Review of the Use of "Theory of Change" in International Development.* UK Department for International Development (DFID).
 - Mayne, J. (2015). Useful Theory of Change models. *Canadian Journal of Program Evaluation, 30*(2), 119-142.
 
+## earned-income-model-screener
+
+**Tier: `established-standard`**
+
+- Alter, K. (2007). *Social Enterprise Typology* (updated Nov 27, 2007). Virtue Ventures LLC. https://www.4lenses.org/setypology
+- Bell, J., Masaoka, J., & Zimmerman, S. (2010). *Nonprofit Sustainability: Making Strategic Decisions for Financial Viability.* Jossey-Bass. (Matrix Map framework)
+- Zimmerman, S., & Bell, J. (2014). *The Sustainability Mindset: Using the Matrix Map to Make Strategic Decisions.* Jossey-Bass.
+
+## funding-mix-diversification-planner
+
+**Tier: `established-standard`**
+
+- Foster, W., Kim, P., & Christiansen, B. (2009). Ten Nonprofit Funding Models. *Stanford Social Innovation Review*, Spring 2009. (Research: Bridgespan Group analysis of 144 nonprofits reaching $50M+ annual revenue since 1970.)
+- Bridgespan Group (2011). *Finding Your Funding Model: A Practical Approach.*
+
 ---
 
 *This is a living document. Sources are added as skills are built and reviewed.*
