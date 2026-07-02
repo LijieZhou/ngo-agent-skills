@@ -18,12 +18,17 @@ Works with Claude and Codex, and any tool that supports the Agent Skills standar
 https://github.com/LijieZhou/ngo-agent-skills
 ```
 
-**Claude Code CLI** — add this repo as a marketplace, then install the plugin from it:
+**Claude Code CLI** — add this repo as a marketplace, then install only the skills you want:
 
 ```
 claude plugin marketplace add https://github.com/LijieZhou/ngo-agent-skills.git
-claude plugin install ngo-agent-skills@LijieZhou-ngo-agent-skills
+claude plugin install sdg-alignment-mapper@ngo-agent-skills
+claude plugin install logframe-toc-builder@ngo-agent-skills
+claude plugin install earned-income-model-screener@ngo-agent-skills
+claude plugin install funding-mix-diversification-planner@ngo-agent-skills
 ```
+
+Each skill is a separate installable plugin, so you can pick just the ones you need — see [Current Skills](#current-skills) below.
 
 ### OpenAI Codex
 
