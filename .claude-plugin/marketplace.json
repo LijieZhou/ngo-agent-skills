@@ -3,12 +3,46 @@
   "owner": {
     "name": "LijieZhou"
   },
+  "description": "Evidence-grounded Agent Skills for NGO program design, monitoring & evaluation, SDG alignment, and funding strategy. Install only the skills you need.",
   "plugins": [
     {
-      "name": "ngo-agent-skills",
-      "source": ".",
+      "name": "sdg-alignment-mapper",
+      "source": "./",
+      "skills": ["./skills/sdg-alignment-mapper"],
+      "description": "Maps an NGO/development program's activities, target group, and intended outcomes to relevant UN SDG goals, targets, and global indicators, with optional national-context overlays.",
       "version": "0.1.0",
-      "description": "Agent-agnostic skill library for NGO program design, monitoring & evaluation, SDG reporting, and earned-income/funding-strategy screening."
+      "license": "CC-BY-SA-4.0",
+      "category": "sdg-alignment"
+    },
+    {
+      "name": "logframe-toc-builder",
+      "source": "./",
+      "skills": ["./skills/logframe-toc-builder"],
+      "description": "Builds a logical framework (logframe) matrix and/or Theory of Change narrative for an NGO or development program from its stated goal and planned activities.",
+      "version": "0.1.0",
+      "license": "CC-BY-SA-4.0",
+      "category": "me-program-design"
+    },
+    {
+      "name": "earned-income-model-screener",
+      "source": "./",
+      "skills": ["./skills/earned-income-model-screener"],
+      "description": "Screens and classifies earned-income and social-enterprise ideas using Kim Alter's Social Enterprise Typology and the Matrix Map (mission impact vs. financial profitability).",
+      "version": "0.1.0",
+      "license": "CC-BY-SA-4.0",
+      "category": "earned-income"
+    },
+    {
+      "name": "funding-mix-diversification-planner",
+      "source": "./",
+      "skills": ["./skills/funding-mix-diversification-planner"],
+      "description": "Analyzes an NGO's current funding mix and recommends how to diversify it, including toward earned income, using the Ten Nonprofit Funding Models framework.",
+      "version": "0.1.0",
+      "license": "CC-BY-SA-4.0",
+      "category": "funding-strategy"
     }
-  ]
+  ],
+  "renames": {
+    "ngo-agent-skills": null
+  }
 }

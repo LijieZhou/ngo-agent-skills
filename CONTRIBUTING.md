@@ -38,6 +38,24 @@ Every `SKILL.md` must include, in its YAML frontmatter:
 - `official` — `true`/`false`; `true` for anything maintained by this project's core team
 - `last_reviewed` — `YYYY-MM-DD`, the last time the evidence sourcing was checked against current reality; powers the website's Audit page
 
+## Registering a new skill as a plugin
+
+Each skill installs independently as its own Claude Code plugin. When you add a new `skills/<skill-name>/` folder, also add a matching entry to the `plugins` array in [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json):
+
+```json
+{
+  "name": "<skill-name>",
+  "source": "./",
+  "skills": ["./skills/<skill-name>"],
+  "description": "<short description>",
+  "version": "0.1.0",
+  "license": "CC-BY-SA-4.0",
+  "category": "<topic>"
+}
+```
+
+The `source: "./"` plus a `skills` path scoped to just that folder is what keeps each plugin entry limited to its own skill, even though every entry shares the same repository root. Run `claude plugin validate .` to confirm the marketplace still validates after your change.
+
 ## Validation before a pull request
 
 Run:
