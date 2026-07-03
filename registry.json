@@ -1,5 +1,5 @@
 {
-  "skill_count": 4,
+  "skill_count": 5,
   "skills": [
     {
       "name": "earned-income-model-screener",
@@ -54,6 +54,24 @@
       "official": true,
       "last_reviewed": "2026-07-01",
       "path": "skills/logframe-toc-builder/SKILL.md"
+    },
+    {
+      "name": "oecd-dac-criteria-screener",
+      "description": "Screens an NGO or development program's design against the six OECD-DAC evaluation criteria (Relevance, Coherence, Effectiveness, Efficiency, Impact, Sustainability) \u2014 the structure nearly every donor evaluation terms of reference is built on. Rates each applicable criterion qualitatively (Strong / Partial / Weak / Insufficient information), names the evidence gap behind any weak rating, and flags which criteria can't yet be meaningfully assessed given the program's stage. Use when a user asks to pre-check a program against OECD-DAC criteria, prepare for a donor evaluation, self-assess relevance/coherence/effectiveness/efficiency/impact/sustainability, or wants an honest read on evaluation-readiness before a proposal or report goes out.",
+      "version": "0.1.0",
+      "license": "CC-BY-SA-4.0",
+      "evidence_strength": "established-standard",
+      "evidence_sources": [
+        "OECD/DAC Network on Development Evaluation (2019). Better Criteria for Better Evaluation: Revised Evaluation Criteria Definitions and Principles for Use.",
+        "OECD (2021). Applying Evaluation Criteria Thoughtfully. OECD Publishing."
+      ],
+      "topics": [
+        "program-evaluation",
+        "oecd-dac-criteria"
+      ],
+      "official": true,
+      "last_reviewed": "2026-07-03",
+      "path": "skills/oecd-dac-criteria-screener/SKILL.md"
     },
     {
       "name": "sdg-alignment-mapper",

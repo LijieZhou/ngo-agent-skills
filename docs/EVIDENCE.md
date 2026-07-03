@@ -45,6 +45,13 @@ Every skill's `evidence_strength` frontmatter field must be one of:
 - Foster, W., Kim, P., & Christiansen, B. (2009). Ten Nonprofit Funding Models. *Stanford Social Innovation Review*, Spring 2009. (Research: Bridgespan Group analysis of 144 nonprofits reaching $50M+ annual revenue since 1970.)
 - Bridgespan Group (2011). *Finding Your Funding Model: A Practical Approach.*
 
+## oecd-dac-criteria-screener
+
+**Tier: `established-standard`**
+
+- OECD/DAC Network on Development Evaluation (2019). *Better Criteria for Better Evaluation: Revised Evaluation Criteria Definitions and Principles for Use.*
+- OECD (2021). *Applying Evaluation Criteria Thoughtfully.* OECD Publishing.
+
 ---
 
 *This is a living document. Sources are added as skills are built and reviewed.*

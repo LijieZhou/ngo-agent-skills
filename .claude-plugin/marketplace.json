@@ -40,6 +40,15 @@
       "version": "0.1.0",
       "license": "CC-BY-SA-4.0",
       "category": "funding-strategy"
+    },
+    {
+      "name": "oecd-dac-criteria-screener",
+      "source": "./",
+      "skills": ["./skills/oecd-dac-criteria-screener"],
+      "description": "Screens an NGO or development program's design against the six OECD-DAC evaluation criteria (Relevance, Coherence, Effectiveness, Efficiency, Impact, Sustainability), rating each honestly and flagging evidence gaps before a real donor evaluation does.",
+      "version": "0.1.0",
+      "license": "CC-BY-SA-4.0",
+      "category": "program-evaluation"
     }
   ],
   "renames": {
