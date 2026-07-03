@@ -1,6 +1,6 @@
 # NGO Agent Skills
 
-[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-1.0-blue)](https://agentskills.io) [![Skills](https://img.shields.io/badge/skills-4-blue)](https://github.com/LijieZhou/ngo-agent-skills) [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/) [![Last Commit](https://img.shields.io/github/last-commit/LijieZhou/ngo-agent-skills)](https://github.com/LijieZhou/ngo-agent-skills/commits/main)
+[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-1.0-blue)](https://agentskills.io) [![Skills](https://img.shields.io/badge/skills-5-blue)](https://github.com/LijieZhou/ngo-agent-skills) [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/) [![Last Commit](https://img.shields.io/github/last-commit/LijieZhou/ngo-agent-skills)](https://github.com/LijieZhou/ngo-agent-skills/commits/main)
 
 An open-source library of evidence-based skills for NGO program design, monitoring & evaluation (M&E), and SDG/donor reporting — works in Claude (Cowork, Claude Code) and OpenAI Codex, and follows the open [Agent Skills](https://agentskills.io) standard so it can run anywhere that supports it.
 
@@ -26,6 +26,7 @@ claude plugin install sdg-alignment-mapper@ngo-agent-skills
 claude plugin install logframe-toc-builder@ngo-agent-skills
 claude plugin install earned-income-model-screener@ngo-agent-skills
 claude plugin install funding-mix-diversification-planner@ngo-agent-skills
+claude plugin install oecd-dac-criteria-screener@ngo-agent-skills
 ```
 
 Each skill is a separate installable plugin, so you can pick just the ones you need — see [Current Skills](#current-skills) below.
@@ -121,6 +122,7 @@ See [`docs/EVIDENCE.md`](docs/EVIDENCE.md) for the full bibliography behind ever
 | [`logframe-toc-builder`](skills/logframe-toc-builder/SKILL.md) | M&E / Program Design | Established standard |
 | [`earned-income-model-screener`](skills/earned-income-model-screener/SKILL.md) | Earned Income & Social Enterprise | Established standard |
 | [`funding-mix-diversification-planner`](skills/funding-mix-diversification-planner/SKILL.md) | Funding Strategy | Established standard |
+| [`oecd-dac-criteria-screener`](skills/oecd-dac-criteria-screener/SKILL.md) | Program Evaluation | Established standard |
 
 `sdg-alignment-mapper` is country-agnostic by default (maps to the UN Global Indicator Framework) and adds optional national-context overlays — Malaysia/MySDG is the first one, in `skills/sdg-alignment-mapper/references/malaysia.md`.
 
@@ -129,6 +131,8 @@ See [`docs/EVIDENCE.md`](docs/EVIDENCE.md) for the full bibliography behind ever
 `earned-income-model-screener` classifies and scores earned-income/social-enterprise ideas using Kim Alter's Social Enterprise Typology and the Matrix Map (mission impact vs. financial profitability), producing a Star/Heart/Money Tree/Stop Sign recommendation per idea.
 
 `funding-mix-diversification-planner` assesses an organization's current funding concentration and recommends diversification moves using Bridgespan's "Ten Nonprofit Funding Models." It pairs naturally with `earned-income-model-screener` — screened ideas map onto candidate funding archetypes — though neither skill depends on the other.
+
+`oecd-dac-criteria-screener` screens a program's design against the six OECD-DAC evaluation criteria — Relevance, Coherence, Effectiveness, Efficiency, Impact, Sustainability — rating each honestly and naming the evidence gap behind any weak rating, so program staff can see where a design would struggle in a real donor evaluation before it happens. It pairs naturally with `logframe-toc-builder` and `sdg-alignment-mapper`, though it works standalone from a plain program description.
 
 A companion browsable site (Topics / Official / Audits / Docs) is at [`ngo-agent-skills-site`](https://github.com/LijieZhou/ngo-agent-skills-site).
 
